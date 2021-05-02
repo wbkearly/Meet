@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">遇见</string>
+    <string name="text_index">相遇总是美好的</string>
+    <string name="skip">跳过</string>
+    <string name="text_guide_earth">每个人，都是一颗孤独的星球</string>
+    <string name="text_guide_night">我们在黑夜中寻找光明</string>
+    <string name="text_guide_smile">如果遇见，请面带微笑</string>
+    <string name="text_login_phone">请输入手机号码</string>
+    <string name="text_login_code">请输入验证码</string>
+    <string name="text_login_send">发送</string>
+    <string name="text_login_login">登录</string>
+    <string name="text_login_phone_is_empty">手机号码不能为空</string>
+    <string name="text_login_code_is_empty">验证码不能为空</string>
+    <string name="text_star">星球</string>
+    <string name="text_square">广场</string>
+    <string name="text_me">我的</string>
+    <string name="text_chat">聊天</string>
+    <string name="text_main_dialog_text1">欢迎来到遇见App</string>
+    <string name="text_main_dialog_text2">听说你是第一次使用</string>
+    <string name="text_main_dialog_text3">快来填写资料吧</string>
+
+    <string name="text_upload_title">头像上传/资料填写</string>
+    <string name="text_upload_portrait_title">一张有个性的头像可以吸引人</string>
+    <string name="text_upload_nickname_title">一个名字，一个故事</string>
+    <string name="text_upload_nickname">昵称</string>
+    <string name="text_upload_done">完成</string>
+    <string name="text_dialog_camera">拍照</string>
+    <string name="text_dialog_ablum">从相册选择</string>
+    <string name="text_dialog_cancel">取消</string>
+    <string name="text_gender_boy">男</string>
+    <string name="text_gender_girl">女</string>
+    <string name="text_dialog_ensure">确定</string>
+
+    <string name="dialog_add_friend_title">添加联系人</string>
+    <string name="dialog_add_friend_msg">留言..</string>
+    <string name="dialog_add_friend_confirm">确定</string>
+    <string name="dialog_add_friend_add">添加</string>
+    <string name="dialog_add_friend_cancel">取消</string>
+
+    <string name="text_main_star_1">随机</string>
+    <string name="text_main_star_2">灵魂</string>
+    <string name="text_main_star_3">缘分</string>
+    <string name="text_main_star_4">恋爱</string>
+    <string name="text_add_friend_contact">从通讯录导入</string>
+
+</resources>

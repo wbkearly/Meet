@@ -1,0 +1,55 @@
+plugins {
+    id 'com.android.application'
+}
+
+/**
+ * 全量编译 ----> open project
+ * 增量编译 ----> 修改Java/Kotlin
+ * 资源增量 ----> 修改res下面
+ *
+ * 发布App到应用市场 ：多渠道/全部
+ * 调试：DEBUG
+ */
+android {
+
+    // 调试
+    if (rootProject.hasProperty("devBuild")) {
+        splits.abi.enable = false
+        splits.density.enable = false
+        // 禁用PNG压缩
+        aaptOptions.cruncherEnabled = false
+
+    }
+
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion  rootProject.ext.android["buildToolsVersion"]
+
+    defaultConfig {
+        applicationId rootProject.ext.android["applicationId"]
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+
+        // 调试
+        resConfigs("zh", "xxhdpi")
+    }
+
+    buildTypes {
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    // 添加framework的依赖
+    implementation project(path: ":framework")
+
+}

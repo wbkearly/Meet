@@ -1,0 +1,26 @@
+ext {
+    // Android 配置
+    android = [
+            compileSdkVersion: 29,
+            buildToolsVersion: "29.0.2",
+            applicationId: "com.wbk.meet",
+            minSdkVersion: 21,
+            targetSdkVersion: 29,
+            versionCode: 1,
+            versionName: "1.0"
+    ]
+    // 依赖配置
+    dependencies = [
+            appcompat:  "androidx.appcompat:appcompat:1.2.0",
+            bmobsdk: "io.github.bmob:android-sdk:3.8.2",
+            rxjava2: "io.reactivex.rxjava2:rxjava:2.2.8",
+            rxandroid2: "io.reactivex.rxjava2:rxandroid:2.1.1",
+            okio: "com.squareup.okio:okio:2.2.2",
+            gson: "com.google.code.gson:gson:2.8.5",
+            okhttp3: "com.squareup.okhttp3:okhttp:3.14.1",
+            tagcloud: "com.moxun:tagcloudlib:1.2.0",
+            circleimageview: "de.hdodenhof:circleimageview:3.1.0",
+            datepicker: 'cn.aigestudio.datepicker:DatePicker:2.2.0',
+            osssdk: 'com.aliyun.dpa:oss-android-sdk:2.9.5'
+    ]
+}
