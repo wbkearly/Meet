@@ -121,3 +121,7 @@
 		- 在CommonViewHolder中使用SparseArray来保存子view, 相比较与HashMap而言提高了内存效率。
 	
 * 完善我的页面头部拉伸滑动效果
+
+* OkHttp 请求
+
+

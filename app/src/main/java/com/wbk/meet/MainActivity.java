@@ -18,9 +18,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.wbk.framework.base.BaseUIActivity;
 import com.wbk.framework.bmob.BmobManager;
+import com.wbk.framework.bmob.IMUser;
 import com.wbk.framework.entity.Constants;
+import com.wbk.framework.helper.GlideHelper;
 import com.wbk.framework.manager.DialogManager;
-import com.wbk.framework.utils.LogUtil;
+import com.wbk.framework.manager.HttpManager;
 import com.wbk.framework.utils.SpUtil;
 import com.wbk.framework.view.DialogView;
 import com.wbk.meet.fragment.ChatFragment;
@@ -30,7 +32,12 @@ import com.wbk.meet.fragment.StarFragment;
 import com.wbk.meet.service.CloudService;
 import com.wbk.meet.ui.FirstUploadActivity;
 
+import java.util.HashMap;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 
 public class MainActivity extends BaseUIActivity implements View.OnClickListener {
 
@@ -143,7 +150,22 @@ public class MainActivity extends BaseUIActivity implements View.OnClickListener
     }
 
     private void createToken() {
-        LogUtil.i("create token...");
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("userId", BmobManager.getInstance().getUser().getObjectId());
+        map.put("name", BmobManager.getInstance().getUser().getNickname());
+        map.put("portraitUrl", BmobManager.getInstance().getUser().getTokenPortrait());
+
+        // 通过OkHttp 请求Token
+        Observable.create(new ObservableOnSubscribe<String>() {
+
+            @Override
+            public void subscribe(@io.reactivex.annotations.NonNull ObservableEmitter<String> emitter) throws Exception {
+                // 执行请求过程
+                String json = HttpManager.getInstance().postCloudToken(map);
+//                emitter.onNext();
+            }
+        });
     }
 
     private void createUploadDialog() {
@@ -318,6 +340,12 @@ public class MainActivity extends BaseUIActivity implements View.OnClickListener
             if (requestCode == UPLOAD_REQUEST_CODE) {
                 // 上传成功
                 checkToken();
+                // 刷新我的页面信息
+                ImageView ivPortrait = mMeFragment.getView().findViewById(R.id.iv_me_portrait);
+                TextView tvNickname = mMeFragment.getView().findViewById(R.id.tv_nickname);
+                IMUser user = BmobManager.getInstance().getUser();
+                GlideHelper.loadUrl(this, user.getPortrait(), ivPortrait);
+                tvNickname.setText(user.getNickname());
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
