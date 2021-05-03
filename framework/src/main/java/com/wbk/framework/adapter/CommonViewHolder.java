@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.wbk.framework.helper.GlideHelper;
+
 public class CommonViewHolder extends RecyclerView.ViewHolder {
 
     //子View集合
@@ -46,8 +48,7 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
 
     public CommonViewHolder setImageUrl(Context context, int viewId, String url) {
         ImageView imageView = getView(viewId);
-        // TODO
-        // GlideHelper.loadUrl(mContext, url,imageView);
+        GlideHelper.loadUrl(context, url,imageView);
         return this;
     }
 
