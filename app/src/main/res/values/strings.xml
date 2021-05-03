@@ -42,5 +42,6 @@
     <string name="text_main_star_3">缘分</string>
     <string name="text_main_star_4">恋爱</string>
     <string name="text_add_friend_contact">从通讯录导入</string>
+    <string name="text_user_add_friend">添加好友</string>
 
 </resources>

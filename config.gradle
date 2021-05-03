@@ -21,6 +21,7 @@ ext {
             tagcloud: "com.moxun:tagcloudlib:1.2.0",
             circleimageview: "de.hdodenhof:circleimageview:3.1.0",
             datepicker: 'cn.aigestudio.datepicker:DatePicker:2.2.0',
-            osssdk: 'com.aliyun.dpa:oss-android-sdk:2.9.5'
+            osssdk: 'com.aliyun.dpa:oss-android-sdk:2.9.5',
+            glide: 'com.github.bumptech.glide:glide:4.12.0'
     ]
 }

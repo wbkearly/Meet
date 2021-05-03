@@ -44,4 +44,5 @@ dependencies {
     api rootProject.ext.dependencies["circleimageview"]
     api rootProject.ext.dependencies["datepicker"]
     api rootProject.ext.dependencies["osssdk"]
+    api rootProject.ext.dependencies["glide"]
 }

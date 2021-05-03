@@ -34,7 +34,6 @@ import java.util.List;
 
 public class MainActivity extends BaseUIActivity implements View.OnClickListener {
 
-    private static final int PERMISSION_REQUEST_CODE = 1000;
     public static final int UPLOAD_REQUEST_CODE = 1002;
 
     private FrameLayout mFlMain;
@@ -74,7 +73,7 @@ public class MainActivity extends BaseUIActivity implements View.OnClickListener
      * 请求权限
      */
     private void requestPermission() {
-        request(PERMISSION_REQUEST_CODE, new OnPermissionsResult() {
+        request(new OnPermissionsResult() {
             @Override
             public void onSuccess() {
 

@@ -15,6 +15,11 @@ import java.util.List;
 
 public class BaseActivity extends AppCompatActivity {
 
+    //申请运行时权限的Code
+    private static final int PERMISSION_REQUEST_CODE = 1000;
+    //申请窗口权限的Code
+    public static final int PERMISSION_WINDOW_REQUEST_CODE = 1001;
+
     private String[] mPermissions = {
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -31,9 +36,9 @@ public class BaseActivity extends AppCompatActivity {
 
     private int mRequestCode;
 
-    protected void request(int requestCode, OnPermissionsResult permissionsResult) {
+    protected void request(OnPermissionsResult permissionsResult) {
         if (!checkAllPermissions()) {
-            requestAllPermissions(requestCode, permissionsResult);
+            requestAllPermissions(permissionsResult);
         }
     }
 
@@ -59,16 +64,15 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * 请求权限
      */
-    protected void requestPermission(String[] permissions, int requestCode) {
+    protected void requestPermission(String[] permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permissions, requestCode);
+            requestPermissions(permissions, PERMISSION_REQUEST_CODE);
         }
     }
 
-    protected void requestAllPermissions(int requestCode, OnPermissionsResult permissionsResult) {
-        this.mRequestCode = requestCode;
+    protected void requestAllPermissions(OnPermissionsResult permissionsResult) {
         this.mPermissionsResult = permissionsResult;
-        requestPermission(mPermissionList.toArray(new String[0]), requestCode);
+        requestPermission(mPermissionList.toArray(new String[0]));
     }
 
     @Override
@@ -108,11 +112,11 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * 请求窗口权限
      */
-    protected void requestWindowPermissions(int requestCode) {
+    protected void requestWindowPermissions() {
         Intent intent = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
-            startActivityForResult(intent, requestCode);
+            startActivityForResult(intent, PERMISSION_WINDOW_REQUEST_CODE);
         }
     }
 }

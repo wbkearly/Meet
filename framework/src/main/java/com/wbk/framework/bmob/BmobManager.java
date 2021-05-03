@@ -96,6 +96,11 @@ public class BmobManager {
         baseQuery("mobilePhoneNumber", phone, listener);
     }
 
+    public void queryAllUsers(FindListener<IMUser> listener) {
+        BmobQuery<IMUser> query = new BmobQuery<>();
+        query.findObjects(listener);
+    }
+
     public void baseQuery(String key, String value, FindListener<IMUser> listener) {
         BmobQuery<IMUser> query = new BmobQuery<>();
         query.addWhereEqualTo(key, value);

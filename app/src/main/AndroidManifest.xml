@@ -52,8 +52,8 @@
             android:launchMode="singleTask" />
 
         <activity android:name=".ui.AddFriendActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:label="@string/text_user_add_friend"
+            android:launchMode="singleTask" />
 
         <service android:name=".service.CloudService" android:exported="true" />
         
