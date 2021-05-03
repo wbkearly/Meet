@@ -65,6 +65,12 @@ public class AddFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ((ContentViewHolder) holder).mTvNickname.setText(model.getNickname());
             ((ContentViewHolder) holder).mTvAge.setText(model.getAge() + "岁");
             ((ContentViewHolder) holder).mTvDesc.setText(model.getDesc());
+
+            if (model.isContact()) {
+                ((ContentViewHolder) holder).mLlContactInfo.setVisibility(View.GONE);
+                ((ContentViewHolder) holder).mTvContactName.setText(model.getContactName());
+                ((ContentViewHolder) holder).mTvContactPhone.setText(model.getContactPhone());
+            }
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +109,9 @@ public class AddFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private TextView mTvNickname;
         private TextView mTvAge;
         private TextView mTvDesc;
+        private LinearLayout mLlContactInfo;
+        private TextView mTvContactName;
+        private TextView mTvContactPhone;
 
         public ContentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -112,6 +121,9 @@ public class AddFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             mTvNickname = itemView.findViewById(R.id.tv_nickname);
             mTvAge = itemView.findViewById(R.id.tv_age);
             mTvDesc = itemView.findViewById(R.id.tv_desc);
+            mLlContactInfo =  itemView.findViewById(R.id.ll_contact_info);
+            mTvContactName =  itemView.findViewById(R.id.tv_contact_name);
+            mTvContactPhone = itemView.findViewById(R.id.tv_contact_phone);
         }
     }
 
