@@ -43,5 +43,10 @@
     <string name="text_main_star_4">恋爱</string>
     <string name="text_add_friend_contact">从通讯录导入</string>
     <string name="text_user_add_friend">添加好友</string>
+    <string name="text_me_item_title_1">个人信息</string>
+    <string name="text_me_item_title_3">新朋友</string>
+    <string name="text_me_item_title_4">隐私设置</string>
+    <string name="text_me_item_title_5">分享</string>
+    <string name="text_me_item_title_6">设置</string>
 
 </resources>
