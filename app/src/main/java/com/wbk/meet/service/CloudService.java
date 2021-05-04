@@ -6,13 +6,20 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
 import com.wbk.framework.cloud.CloudManager;
+import com.wbk.framework.db.LitePalHelper;
 import com.wbk.framework.entity.Constants;
+import com.wbk.framework.gson.TextBean;
 import com.wbk.framework.utils.LogUtils;
 import com.wbk.framework.utils.SpUtils;
 
+import org.litepal.LitePal;
+
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
+import io.rong.message.TextMessage;
 
 public class CloudService extends Service {
     @Nullable
@@ -53,6 +60,23 @@ public class CloudService extends Service {
             @Override
             public boolean onReceived(final Message message, final int left, boolean hasPackage, boolean offline) {
                 LogUtils.i("message:" + message);
+                String objectName = message.getObjectName();
+                if (objectName.equals(CloudManager.MESSAGE_TEXT_NAME)) {
+                    // 获取消息主体
+                    TextMessage textMessage = (TextMessage) message.getContent();
+                    String content = textMessage.getContent();
+                    LogUtils.i("content:" + content);
+                    TextBean textBean = new Gson().fromJson(content, TextBean.class);
+                    if (textBean.getType().equals(CloudManager.TYPE_TEXT)) {
+
+                    } else if (textBean.getType().equals(CloudManager.TYPE_ADD_FRIEND)) {
+                        // 存入本地数据库
+                        LogUtils.i("添加好友消息...");
+                        LitePalHelper.getInstance().saveNewFriend(textBean.getMsg(), message.getSenderUserId());
+                    } else if (textBean.getType().equals(CloudManager.TYPE_AGREE_FRIEND)) {
+
+                    }
+                }
                 return false;
             }
         });

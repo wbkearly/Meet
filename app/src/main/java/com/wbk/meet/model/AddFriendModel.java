@@ -1,4 +1,4 @@
-package com.wbk.meet.mdoel;
+package com.wbk.meet.model;
 
 /**
  * 添加好友的数据模型

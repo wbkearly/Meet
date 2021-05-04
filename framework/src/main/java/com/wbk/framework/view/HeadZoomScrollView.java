@@ -50,8 +50,8 @@ public class HeadZoomScrollView extends ScrollView {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (mZoomViewWidth <= 0 || mZoomViewHeight <= 0) {
-            mZoomViewWidth = mZoomView.getWidth();
-            mZoomViewHeight = mZoomView.getHeight();
+            mZoomViewWidth = mZoomView.getMeasuredWidth();
+            mZoomViewHeight = mZoomView.getMeasuredHeight();
         }
 
         switch (ev.getAction()) {
@@ -75,10 +75,11 @@ public class HeadZoomScrollView extends ScrollView {
             case MotionEvent.ACTION_UP:
                 isScrolling = false;
                 resetZoomView();
+                break;
             default:
                 break;
         }
-        return super.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
     }
 
     private void resetZoomView() {

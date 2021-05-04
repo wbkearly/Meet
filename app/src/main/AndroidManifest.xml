@@ -59,6 +59,10 @@
             android:label="@string/text_add_friend_contact"
             android:launchMode="singleTask" />
 
+        <activity android:name=".ui.UserInfoActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <service android:name=".service.CloudService" android:exported="true" />
         
         <!--FileProvider-->

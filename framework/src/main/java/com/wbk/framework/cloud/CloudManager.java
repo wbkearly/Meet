@@ -1,8 +1,10 @@
 package com.wbk.framework.cloud;
 
 import android.content.Context;
-
 import com.wbk.framework.utils.LogUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -22,6 +24,11 @@ public class CloudManager {
     public static final String MESSAGE_TEXT_NAME = "RC:TxtMsg";
     public static final String MESSAGE_IMAGE_NAME = "RC:ImgMsg";
     public static final String MESSAGE_LOCATION_NAME = "RC:LBSMsg";
+
+    // Msg type
+    public static final String TYPE_ADD_FRIEND = "TYPE_ADD_FRIEND";
+    public static final String TYPE_AGREE_FRIEND = "TYPE_AGREE_FRIEND";
+    public static final String TYPE_TEXT = "TYPE_TEXT";
 
     private static volatile CloudManager mInstance = null;
 
@@ -127,5 +134,17 @@ public class CloudManager {
         TextMessage messageContent = TextMessage.obtain(msg);
         Message message = Message.obtain(targetId, conversationType, messageContent);
         RongIMClient.getInstance().sendMessage(message, null, null, mISendMessageCallback);
+    }
+
+    public void sendTextMessage(String msg, String type, String targetId) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("msg", msg);
+            // 如果没有type则是普通消息
+            jsonObject.put("type", type);
+            sendTextMessage(jsonObject.toString(), targetId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

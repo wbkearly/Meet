@@ -48,4 +48,6 @@ dependencies {
     api rootProject.ext.dependencies["glide"]
     api rootProject.ext.dependencies["imlib"]
     api rootProject.ext.dependencies["calllib"]
+    api rootProject.ext.dependencies["litepal"]
+    api rootProject.ext.dependencies["eventbus"]
 }

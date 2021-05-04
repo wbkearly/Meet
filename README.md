@@ -161,4 +161,6 @@ public class SHA1 {
 
 * 完成融云IMLib集成。
 
+* 集成LitePal.
+
 

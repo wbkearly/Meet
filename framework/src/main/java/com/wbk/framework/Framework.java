@@ -7,6 +7,8 @@ import com.wbk.framework.cloud.CloudManager;
 import com.wbk.framework.utils.LogUtils;
 import com.wbk.framework.utils.SpUtils;
 
+import org.litepal.LitePal;
+
 /**
  * Framework的入口
  */
@@ -32,5 +34,6 @@ public class Framework {
         SpUtils.getInstance().initSp(context);
         BmobManager.getInstance().initBmob(context);
         CloudManager.getInstance().initCloud(context);
+        LitePal.initialize(context);
     }
 }

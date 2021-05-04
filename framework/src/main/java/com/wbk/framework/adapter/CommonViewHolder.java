@@ -40,6 +40,12 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
         return (T) view;
     }
 
+    public CommonViewHolder setVisibility(int viewId, int visibility) {
+        TextView textView = getView(viewId);
+        textView.setVisibility(visibility);
+        return this;
+    }
+
     public CommonViewHolder setText(int viewId, String text) {
         TextView textView = getView(viewId);
         textView.setText(text);
@@ -55,6 +61,12 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
     public CommonViewHolder setImageResource(int viewId, int resId) {
         ImageView imageView = getView(viewId);
         imageView.setImageResource(resId);
+        return this;
+    }
+
+    public CommonViewHolder setBgColor(int viewId, int color) {
+        TextView textView = getView(viewId);
+        textView.setBackgroundColor(color);
         return this;
     }
 }

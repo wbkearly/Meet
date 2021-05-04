@@ -15,13 +15,14 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.wbk.framework.adapter.CommonAdapter;
+import com.wbk.framework.adapter.CommonViewHolder;
 import com.wbk.framework.base.BaseBackActivity;
 import com.wbk.framework.bmob.BmobManager;
 import com.wbk.framework.bmob.IMUser;
 import com.wbk.framework.utils.CommonUtils;
 import com.wbk.meet.R;
-import com.wbk.meet.adapter.AddFriendAdapter;
-import com.wbk.meet.mdoel.AddFriendModel;
+import com.wbk.meet.model.AddFriendModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,10 @@ import cn.bmob.v3.listener.FindListener;
 
 public class AddFriendActivity extends BaseBackActivity implements View.OnClickListener {
 
+    // 标题
+    public static final int TYPE_TITLE = 0;
+    // 内容
+    public static final int TYPE_CONTENT = 1;
 
     private LinearLayout mLlToContact;
     private EditText mEtPhone;
@@ -38,7 +43,7 @@ public class AddFriendActivity extends BaseBackActivity implements View.OnClickL
     private RecyclerView mRvSearchResult;
     private View mIncludeEmptyView;
 
-    private AddFriendAdapter mAddFriendAdapter;
+    private CommonAdapter<AddFriendModel> mAddFriendAdapter;
     private List<AddFriendModel> mList = new ArrayList<>();
 
     @Override
@@ -61,16 +66,51 @@ public class AddFriendActivity extends BaseBackActivity implements View.OnClickL
         // 列表实现
         mRvSearchResult.setLayoutManager(new LinearLayoutManager(this));
         mRvSearchResult.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mAddFriendAdapter = new AddFriendAdapter(this, mList);
-        mRvSearchResult.setAdapter(mAddFriendAdapter);
-
-        mAddFriendAdapter.setOnClickListener(new AddFriendAdapter.OnClickListener() {
+        mAddFriendAdapter = new CommonAdapter<>(mList, new CommonAdapter.OnBindMultiTypeDataListener<AddFriendModel>() {
             @Override
-            public void onClick(int position) {
-                // TODO 点击事件
-                Toast.makeText(AddFriendActivity.this, "position" + position, Toast.LENGTH_SHORT).show();
+            public int getItemType(int position) {
+                return mList.get(position).getType();
+            }
+
+            @Override
+            public void onBindViewHolder(AddFriendModel model, CommonViewHolder viewHolder, int type, int position) {
+                if (type == TYPE_TITLE) {
+                    viewHolder.setText(R.id.tv_title, model.getTitle());
+                } else if (model.getType() == TYPE_CONTENT) {
+                    viewHolder.setImageUrl(AddFriendActivity.this, R.id.iv_portrait, model.getPortrait());
+                    viewHolder.setImageResource(R.id.iv_gender, model.isGender() ? R.drawable.img_boy_icon : R.drawable.img_girl_icon);
+                    viewHolder.setText(R.id.tv_nickname, model.getNickname());
+                    viewHolder.setText(R.id.tv_age, model.getAge() + "岁");
+                    viewHolder.setText(R.id.tv_desc, model.getDesc());
+
+                    if (model.isContact()) {
+                        viewHolder.setVisibility(R.id.tv_contact_name, View.GONE);
+                        viewHolder.setText(R.id.tv_contact_name, model.getContactName());
+                        viewHolder.setText(R.id.tv_contact_phone, model.getContactPhone());
+                    }
+
+                    // 点击事件
+                    viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            UserInfoActivity.startActivity(AddFriendActivity.this,
+                                    model.getUserId());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public int getLayoutId(int type) {
+                if (type == TYPE_TITLE) {
+                    return R.layout.layout_search_title_item;
+                } else if(type == TYPE_CONTENT) {
+                    return R.layout.layout_search_user_item;
+                }
+                return 0;
             }
         });
+        mRvSearchResult.setAdapter(mAddFriendAdapter);
     }
 
 
@@ -159,14 +199,14 @@ public class AddFriendActivity extends BaseBackActivity implements View.OnClickL
 
     private void addTitle(String title) {
         AddFriendModel model = new AddFriendModel();
-        model.setType(AddFriendAdapter.TYPE_TITLE);
+        model.setType(TYPE_TITLE);
         model.setTitle(title);
         mList.add(model);
     }
 
     private void addContent(IMUser imUser) {
         AddFriendModel model = new AddFriendModel();
-        model.setType(AddFriendAdapter.TYPE_CONTENT);
+        model.setType(TYPE_CONTENT);
         model.setUserId(imUser.getObjectId());
         model.setPortrait(imUser.getPortrait());
         model.setGender(imUser.isGender());

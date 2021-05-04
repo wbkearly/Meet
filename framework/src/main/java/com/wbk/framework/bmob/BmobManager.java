@@ -92,8 +92,18 @@ public class BmobManager {
         void onUpdateFail(BmobException e);
     }
 
+    public void queryUserById(String objectId, FindListener<IMUser> listener) {
+        baseQuery("objectId", objectId, listener);
+    }
+
     public void queryUserByPhone(String phone, FindListener<IMUser> listener) {
         baseQuery("mobilePhoneNumber", phone, listener);
+    }
+
+    public void queryAllMyFriends(FindListener<Friend> listener) {
+        BmobQuery<Friend> query = new BmobQuery<>();
+        query.addWhereEqualTo("me", getUser());
+        query.findObjects(listener);
     }
 
     public void queryAllUsers(FindListener<IMUser> listener) {

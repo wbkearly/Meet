@@ -3,20 +3,22 @@ package com.wbk.meet.ui;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.wbk.framework.adapter.CommonAdapter;
+import com.wbk.framework.adapter.CommonViewHolder;
 import com.wbk.framework.base.BaseBackActivity;
 import com.wbk.framework.bmob.BmobManager;
 import com.wbk.framework.bmob.IMUser;
 import com.wbk.framework.utils.CommonUtils;
 import com.wbk.framework.utils.LogUtils;
 import com.wbk.meet.R;
-import com.wbk.meet.adapter.AddFriendAdapter;
-import com.wbk.meet.mdoel.AddFriendModel;
+import com.wbk.meet.model.AddFriendModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +34,7 @@ public class ContactFriendActivity extends BaseBackActivity {
 
     private Map<String, String> mContactMap = new HashMap<>();
 
-    private AddFriendAdapter mAddFriendAdapter;
+    private CommonAdapter<AddFriendModel> mAddFriendAdapter;
 
     private List<AddFriendModel> mList = new ArrayList<>();
 
@@ -47,14 +49,39 @@ public class ContactFriendActivity extends BaseBackActivity {
         mRvContact = findViewById(R.id.rv_contact);
         mRvContact.setLayoutManager(new LinearLayoutManager(this));
         mRvContact.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mAddFriendAdapter = new AddFriendAdapter(this, mList);
-        mRvContact.setAdapter(mAddFriendAdapter);
-        mAddFriendAdapter.setOnClickListener(new AddFriendAdapter.OnClickListener() {
+        mAddFriendAdapter = new CommonAdapter<AddFriendModel>(mList, new CommonAdapter.OnBindDataListener<AddFriendModel>() {
             @Override
-            public void onClick(int position) {
+            public void onBindViewHolder(AddFriendModel model, CommonViewHolder viewHolder, int type, int position) {
+                viewHolder.setImageUrl(ContactFriendActivity.this, R.id.iv_portrait, model.getPortrait());
+                viewHolder.setImageResource(R.id.iv_gender, model.isGender() ? R.drawable.img_boy_icon : R.drawable.img_girl_icon);
+                viewHolder.setText(R.id.tv_nickname, model.getNickname());
+                viewHolder.setText(R.id.tv_age, model.getAge() + "岁");
+                viewHolder.setText(R.id.tv_desc, model.getDesc());
 
+                if (model.isContact()) {
+                    viewHolder.setVisibility(R.id.tv_contact_name, View.GONE);
+                    viewHolder.setText(R.id.tv_contact_name, model.getContactName());
+                    viewHolder.setText(R.id.tv_contact_phone, model.getContactPhone());
+                }
+
+                // 点击事件
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UserInfoActivity.startActivity(ContactFriendActivity.this,
+                                model.getUserId());
+                    }
+                });
             }
+
+            @Override
+            public int getLayoutId(int type) {
+                return R.layout.layout_search_user_item;
+            }
+
         });
+
+        mRvContact.setAdapter(mAddFriendAdapter);
         loadContacts();
 
         loadUser();
@@ -97,7 +124,7 @@ public class ContactFriendActivity extends BaseBackActivity {
 
     private void addContent(IMUser imUser, String name, String phone) {
         AddFriendModel model = new AddFriendModel();
-        model.setType(AddFriendAdapter.TYPE_CONTENT);
+        model.setType(AddFriendActivity.TYPE_CONTENT);
         model.setUserId(imUser.getObjectId());
         model.setPortrait(imUser.getPortrait());
         model.setGender(imUser.isGender());
