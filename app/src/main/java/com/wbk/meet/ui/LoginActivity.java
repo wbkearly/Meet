@@ -18,14 +18,13 @@ import com.wbk.framework.bmob.BmobManager;
 import com.wbk.framework.bmob.IMUser;
 import com.wbk.framework.entity.Constants;
 import com.wbk.framework.manager.DialogManager;
-import com.wbk.framework.utils.SpUtil;
+import com.wbk.framework.utils.SpUtils;
 import com.wbk.framework.view.DialogView;
 import com.wbk.framework.view.LoadingView;
 import com.wbk.framework.view.TouchPicture;
 import com.wbk.meet.MainActivity;
 import com.wbk.meet.R;
 
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.QueryListener;
@@ -89,7 +88,7 @@ public class LoginActivity extends BaseUIActivity implements View.OnClickListene
         mBtnSendCode.setOnClickListener(this);
         mBtnLogin.setOnClickListener(this);
 
-        String phone = SpUtil.getInstance().getString(Constants.SP_PHONE, "");
+        String phone = SpUtils.getInstance().getString(Constants.SP_PHONE, "");
         if (!TextUtils.isEmpty(phone)) {
             mEtPhone.setText(phone);
         }
@@ -144,7 +143,7 @@ public class LoginActivity extends BaseUIActivity implements View.OnClickListene
                     // 登录成功
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     // 把手机号码保存下来
-                    SpUtil.getInstance().putString(Constants.SP_PHONE, phone);
+                    SpUtils.getInstance().putString(Constants.SP_PHONE, phone);
                     finish();
                 } else {
                     Toast.makeText(LoginActivity.this, "ERROR:" + e.toString(),

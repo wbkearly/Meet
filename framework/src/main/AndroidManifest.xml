@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.wbk.framework">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -10,13 +11,20 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--获取wifi网络状态的信息 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 音视频需要网络权限 和 监听网络状态权限 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!--获取sd卡写的权限，用于文件上传和下载-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <!--允许读取手机状态 用于创建BmobInstallation-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 摄像头采集需要 -->
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <!-- 读取通讯录 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 音频采集需要 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 </manifest>

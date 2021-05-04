@@ -10,7 +10,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvide
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.wbk.framework.base.BaseApp;
-import com.wbk.framework.utils.HashUtil;
+import com.wbk.framework.utils.HashUtils;
 
 import java.io.File;
 import java.util.Date;
@@ -116,21 +116,21 @@ public class UploadHelper {
 
     // image/
     private String getImageObjKey(String path) {
-        String fileMD5 = HashUtil.getMD5String(new File(path));
+        String fileMD5 = HashUtils.getMD5String(new File(path));
         String dateString = getDateString();
         return String.format("image/%s/%s.jpg", dateString, fileMD5);
     }
 
     // portrait/
     private String getPortraitObjKey(String path) {
-        String fileMD5 = HashUtil.getMD5String(new File(path));
+        String fileMD5 = HashUtils.getMD5String(new File(path));
         String dateString = getDateString();
         return String.format("portrait/%s/%s.jpg", dateString, fileMD5);
     }
 
     // audio/
     private String getAudioObjKey(String path) {
-        String fileMD5 = HashUtil.getMD5String(new File(path));
+        String fileMD5 = HashUtils.getMD5String(new File(path));
         String dateString = getDateString();
         return String.format("audio/%s/%s.mp3", dateString, fileMD5);
     }

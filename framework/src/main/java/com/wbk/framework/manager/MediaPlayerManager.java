@@ -2,14 +2,12 @@ package com.wbk.framework.manager;
 
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
-import com.wbk.framework.utils.LogUtil;
+import com.wbk.framework.utils.LogUtils;
 
 import java.io.IOException;
 
@@ -70,7 +68,7 @@ public class MediaPlayerManager {
             mMediaStatus = MEDIA_STATUS_PLAY;
             mHandler.sendEmptyMessage(H_PROGRESS);
         } catch (IOException e) {
-            LogUtil.e(e.toString());
+            LogUtils.e(e.toString());
             e.printStackTrace();
         }
     }

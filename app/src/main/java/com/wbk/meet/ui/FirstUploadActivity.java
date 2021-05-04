@@ -23,7 +23,7 @@ import com.wbk.framework.bmob.BmobManager;
 import com.wbk.framework.helper.FileHelper;
 import com.wbk.framework.helper.UploadHelper;
 import com.wbk.framework.manager.DialogManager;
-import com.wbk.framework.utils.LogUtil;
+import com.wbk.framework.utils.LogUtils;
 import com.wbk.framework.view.DialogView;
 import com.wbk.framework.view.LoadingView;
 import com.wbk.meet.R;
@@ -149,7 +149,7 @@ public class FirstUploadActivity extends BaseBackActivity implements View.OnClic
             Toast.makeText(FirstUploadActivity.this, "图片上传失败", Toast.LENGTH_SHORT).show();
             return;
         }
-        LogUtil.i("portraitUrl:" + portraitUrl);
+        LogUtils.i("portraitUrl:" + portraitUrl);
         BmobManager.getInstance().updateUserInfo(nickname, portraitUrl, new BmobManager.OnUploadListener() {
             @Override
             public void onUploadSuccess() {
@@ -177,7 +177,7 @@ public class FirstUploadActivity extends BaseBackActivity implements View.OnClic
                 if (uri != null) {
                     // 获取真实地址
                     String path = FileHelper.getInstance().getRealPathFromUri(this, uri);
-                    LogUtil.i("path:" + path);
+                    LogUtils.i("path:" + path);
                     if (!TextUtils.isEmpty(path)) {
                         mUploadFile = new File(path);
                     }

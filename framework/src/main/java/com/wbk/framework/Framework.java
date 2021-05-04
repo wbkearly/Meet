@@ -3,9 +3,9 @@ package com.wbk.framework;
 import android.content.Context;
 
 import com.wbk.framework.bmob.BmobManager;
-import com.wbk.framework.helper.UploadHelper;
-import com.wbk.framework.utils.LogUtil;
-import com.wbk.framework.utils.SpUtil;
+import com.wbk.framework.cloud.CloudManager;
+import com.wbk.framework.utils.LogUtils;
+import com.wbk.framework.utils.SpUtils;
 
 /**
  * Framework的入口
@@ -28,8 +28,9 @@ public class Framework {
     }
 
     public void initFramework(Context context) {
-        LogUtil.i("init framework");
-        SpUtil.getInstance().initSp(context);
+        LogUtils.i("init framework");
+        SpUtils.getInstance().initSp(context);
         BmobManager.getInstance().initBmob(context);
+        CloudManager.getInstance().initCloud(context);
     }
 }

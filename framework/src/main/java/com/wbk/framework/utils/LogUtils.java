@@ -20,7 +20,7 @@ import java.util.Date;
  * 日志打印
  * 记录日志
  */
-public class LogUtil {
+public class LogUtils {
 
     private static SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static void i(String text) {

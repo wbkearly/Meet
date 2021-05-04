@@ -14,7 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.wbk.framework.base.BasePageAdapter;
 import com.wbk.framework.base.BaseUIActivity;
 import com.wbk.framework.manager.MediaPlayerManager;
-import com.wbk.framework.utils.AnimUtil;
+import com.wbk.framework.utils.AnimUtils;
 import com.wbk.meet.R;
 
 import java.util.ArrayList;
@@ -108,7 +108,7 @@ public class GuideActivity extends BaseUIActivity implements View.OnClickListene
         mGuideMusicManager.startPlay(fileDescriptor);
 
         // 旋转动画
-        mAnimator = AnimUtil.rotation(mIvMusicSwitch);
+        mAnimator = AnimUtils.rotation(mIvMusicSwitch);
         mAnimator.start();
     }
 

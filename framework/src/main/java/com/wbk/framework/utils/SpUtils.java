@@ -5,22 +5,22 @@ import android.content.SharedPreferences;
 
 import com.wbk.framework.BuildConfig;
 
-public class SpUtil {
+public class SpUtils {
 
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
 
-    private volatile static SpUtil mInstance = null;
+    private volatile static SpUtils mInstance = null;
 
-    private SpUtil() {
+    private SpUtils() {
 
     }
 
-    public static SpUtil getInstance() {
+    public static SpUtils getInstance() {
         if (mInstance == null) {
-            synchronized (SpUtil.class) {
+            synchronized (SpUtils.class) {
                 if (mInstance == null) {
-                    mInstance = new SpUtil();
+                    mInstance = new SpUtils();
                 }
             }
         }

@@ -3,13 +3,12 @@ package com.wbk.meet.test;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.wbk.framework.base.BaseActivity;
 import com.wbk.framework.bmob.MyData;
-import com.wbk.framework.utils.LogUtil;
+import com.wbk.framework.utils.LogUtils;
 import com.wbk.meet.R;
 
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -61,7 +59,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
                     @Override
                     public void done(String s, BmobException e) {
                         if (e == null) {
-                            LogUtil.i("新增成功" + s);
+                            LogUtils.i("新增成功" + s);
                         }
                     }
                 });
@@ -73,9 +71,9 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
                     @Override
                     public void done(BmobException e) {
                         if (e == null) {
-                            LogUtil.i("删除成功");
+                            LogUtils.i("删除成功");
                         } else {
-                            LogUtil.i("删除失败");
+                            LogUtils.i("删除失败");
                         }
                     }
                 });
@@ -87,7 +85,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
                     @Override
                     public void done(BmobException e) {
                         if (e == null) {
-                            LogUtil.i("修改成功！");
+                            LogUtils.i("修改成功！");
                         }
                     }
                 });
@@ -111,7 +109,7 @@ public class TestActivity extends BaseActivity implements View.OnClickListener {
                         if (e == null) {
                             if (object != null && object.size() > 0) {
                                 for (MyData data : object) {
-                                    LogUtil.i("MyData:name:" + data.getName() + "-" +
+                                    LogUtils.i("MyData:name:" + data.getName() + "-" +
                                             "gender:" + data.getGender());
                                 }
                             }

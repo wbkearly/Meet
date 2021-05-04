@@ -12,7 +12,7 @@ import android.provider.MediaStore;
 import androidx.core.content.FileProvider;
 import androidx.loader.content.CursorLoader;
 
-import com.wbk.framework.utils.LogUtil;
+import com.wbk.framework.utils.LogUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -56,7 +56,7 @@ public class FileHelper {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION |
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         }
-        LogUtil.i("imageUri" + mImageUri);
+        LogUtils.i("imageUri" + mImageUri);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
         activity.startActivityForResult(intent, CAMERA_REQUEST_CODE);
     }

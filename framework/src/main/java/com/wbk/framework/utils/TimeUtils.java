@@ -3,7 +3,7 @@ package com.wbk.framework.utils;
 /**
  * 时间转换类
  */
-public class TimeUtil {
+public class TimeUtils {
 
     /**
      * 转换毫秒格式 HH:mm:ss

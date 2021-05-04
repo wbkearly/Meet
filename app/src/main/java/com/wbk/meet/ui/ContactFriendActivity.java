@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.wbk.framework.base.BaseBackActivity;
 import com.wbk.framework.bmob.BmobManager;
 import com.wbk.framework.bmob.IMUser;
-import com.wbk.framework.utils.CommonUtil;
-import com.wbk.framework.utils.LogUtil;
+import com.wbk.framework.utils.CommonUtils;
+import com.wbk.framework.utils.LogUtils;
 import com.wbk.meet.R;
 import com.wbk.meet.adapter.AddFriendAdapter;
 import com.wbk.meet.mdoel.AddFriendModel;
@@ -67,7 +67,7 @@ public class ContactFriendActivity extends BaseBackActivity {
                     @Override
                     public void done(List<IMUser> object, BmobException e) {
                         if (e == null) {
-                            if (CommonUtil.isNotEmpty(object)) {
+                            if (CommonUtils.isNotEmpty(object)) {
                                 IMUser imUser = object.get(0);
                                 addContent(imUser, entry.getKey(), entry.getValue());
                             }
@@ -89,7 +89,7 @@ public class ContactFriendActivity extends BaseBackActivity {
         while (cursor.moveToNext()) {
             name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             phone = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            LogUtil.i("name:" + name + ", phone:" + phone);
+            LogUtils.i("name:" + name + ", phone:" + phone);
             phone = phone.replace(" ", "").replace("-", "");
             mContactMap.put(name, phone);
         }

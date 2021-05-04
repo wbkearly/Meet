@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.wbk.framework.base.BaseBackActivity;
 import com.wbk.framework.bmob.BmobManager;
 import com.wbk.framework.bmob.IMUser;
-import com.wbk.framework.utils.CommonUtil;
+import com.wbk.framework.utils.CommonUtils;
 import com.wbk.meet.R;
 import com.wbk.meet.adapter.AddFriendAdapter;
 import com.wbk.meet.mdoel.AddFriendModel;
@@ -109,7 +109,7 @@ public class AddFriendActivity extends BaseBackActivity implements View.OnClickL
             @Override
             public void done(List<IMUser> object, BmobException e) {
                 if (e == null) {
-                    if (CommonUtil.isNotEmpty(object)) {
+                    if (CommonUtils.isNotEmpty(object)) {
                         IMUser imUser = object.get(0);
                         mIncludeEmptyView.setVisibility(View.GONE);
                         mRvSearchResult.setVisibility(View.VISIBLE);
@@ -140,7 +140,7 @@ public class AddFriendActivity extends BaseBackActivity implements View.OnClickL
             @Override
             public void done(List<IMUser> object, BmobException e) {
                 if (e == null) {
-                    if (CommonUtil.isNotEmpty(object)) {
+                    if (CommonUtils.isNotEmpty(object)) {
                         addTitle("推荐好友");
                         int num = Math.min(object.size(), 100);
                         for (int i = 0; i < num; i++) {

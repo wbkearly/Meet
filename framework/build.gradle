@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+
     api rootProject.ext.dependencies["appcompat"]
     api rootProject.ext.dependencies["bmobsdk"]
     api rootProject.ext.dependencies["rxjava2"]
@@ -45,4 +46,6 @@ dependencies {
     api rootProject.ext.dependencies["datepicker"]
     api rootProject.ext.dependencies["osssdk"]
     api rootProject.ext.dependencies["glide"]
+    api rootProject.ext.dependencies["imlib"]
+    api rootProject.ext.dependencies["calllib"]
 }

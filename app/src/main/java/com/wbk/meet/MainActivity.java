@@ -16,14 +16,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.gson.Gson;
 import com.wbk.framework.base.BaseUIActivity;
 import com.wbk.framework.bmob.BmobManager;
 import com.wbk.framework.bmob.IMUser;
 import com.wbk.framework.entity.Constants;
+import com.wbk.framework.gson.TokenBean;
 import com.wbk.framework.helper.GlideHelper;
 import com.wbk.framework.manager.DialogManager;
 import com.wbk.framework.manager.HttpManager;
-import com.wbk.framework.utils.SpUtil;
+import com.wbk.framework.utils.SpUtils;
 import com.wbk.framework.view.DialogView;
 import com.wbk.meet.fragment.ChatFragment;
 import com.wbk.meet.fragment.MeFragment;
@@ -36,8 +38,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends BaseUIActivity implements View.OnClickListener {
 
@@ -68,6 +72,7 @@ public class MainActivity extends BaseUIActivity implements View.OnClickListener
     private MeFragment mMeFragment;
     private FragmentTransaction mMeTransaction;
 
+    private Disposable mDisposable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,10 +137,10 @@ public class MainActivity extends BaseUIActivity implements View.OnClickListener
     private void checkToken() {
         // 获取token 需要三个参数
         // 用户地址 头像地址 昵称
-        String token = SpUtil.getInstance().getString(Constants.SP_TOKEN, "");
+        String token = SpUtils.getInstance().getString(Constants.SP_TOKEN, "");
         if (!TextUtils.isEmpty(token)) {
             // 启动云服务去连接融云服务
-            startService(new Intent(this, CloudService.class));
+            startCloudService();
         } else {
             String tokenPortrait = BmobManager.getInstance().getUser().getTokenPortrait();
             String tokenNickname = BmobManager.getInstance().getUser().getTokenNickname();
@@ -149,6 +154,10 @@ public class MainActivity extends BaseUIActivity implements View.OnClickListener
         }
     }
 
+    public void startCloudService() {
+        startService(new Intent(this, CloudService.class));
+    }
+
     private void createToken() {
 
         HashMap<String, String> map = new HashMap<>();
@@ -157,15 +166,25 @@ public class MainActivity extends BaseUIActivity implements View.OnClickListener
         map.put("portraitUrl", BmobManager.getInstance().getUser().getTokenPortrait());
 
         // 通过OkHttp 请求Token
-        Observable.create(new ObservableOnSubscribe<String>() {
+        mDisposable = Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            // 执行请求过程
+            String json = HttpManager.getInstance().postCloudToken(map);
+            emitter.onNext(json);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.newThread())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::parsingCloudToken);
+    }
 
-            @Override
-            public void subscribe(@io.reactivex.annotations.NonNull ObservableEmitter<String> emitter) throws Exception {
-                // 执行请求过程
-                String json = HttpManager.getInstance().postCloudToken(map);
-//                emitter.onNext();
+    private void parsingCloudToken(String s) {
+        TokenBean tokenBean = new Gson().fromJson(s, TokenBean.class);
+        if (tokenBean.getCode() == 200) {
+            if (!TextUtils.isEmpty(tokenBean.getToken())) {
+                // 保存Token
+                SpUtils.getInstance().putString(Constants.SP_TOKEN, tokenBean.getToken());
+                startCloudService();
             }
-        });
+        }
     }
 
     private void createUploadDialog() {
@@ -349,5 +368,14 @@ public class MainActivity extends BaseUIActivity implements View.OnClickListener
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //Activity销毁时，中断RxJava管道
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
     }
 }

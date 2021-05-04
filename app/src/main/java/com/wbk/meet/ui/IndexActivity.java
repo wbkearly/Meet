@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import com.wbk.framework.base.BaseActivity;
 import com.wbk.framework.bmob.BmobManager;
 import com.wbk.framework.entity.Constants;
-import com.wbk.framework.utils.SpUtil;
+import com.wbk.framework.utils.SpUtils;
 import com.wbk.meet.MainActivity;
 import com.wbk.meet.R;
 
@@ -54,15 +54,15 @@ public class IndexActivity extends BaseActivity {
      */
     private void startMain() {
         // 判断App是否第一次启动
-        Boolean isFirstRun = SpUtil.getInstance().getBoolean(Constants.SP_IS_FIRST_RUN, true);
+        Boolean isFirstRun = SpUtils.getInstance().getBoolean(Constants.SP_IS_FIRST_RUN, true);
         Intent intent = new Intent();
         if (isFirstRun) {
             // 跳转引导页
             intent.setClass(this, GuideActivity.class);
-            SpUtil.getInstance().putBoolean(Constants.SP_IS_FIRST_RUN, false);
+            SpUtils.getInstance().putBoolean(Constants.SP_IS_FIRST_RUN, false);
         } else {
             // 判断是否曾经登录
-            String token = SpUtil.getInstance().getString(Constants.SP_TOKEN, "");
+            String token = SpUtils.getInstance().getString(Constants.SP_TOKEN, "");
             if (TextUtils.isEmpty(token)) {
                 // 判断Bmob是否登录
                 if (BmobManager.getInstance().isLogin()) {

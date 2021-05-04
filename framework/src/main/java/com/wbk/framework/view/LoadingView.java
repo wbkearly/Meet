@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.wbk.framework.R;
 import com.wbk.framework.manager.DialogManager;
-import com.wbk.framework.utils.AnimUtil;
+import com.wbk.framework.utils.AnimUtils;
 
 public class LoadingView {
 
@@ -22,7 +22,7 @@ public class LoadingView {
         mLoadingView = DialogManager.getInstance().initView(context, R.layout.dialog_loading);
         mIvLoading = mLoadingView.findViewById(R.id.iv_loading);
         mTvLoadingText = mLoadingView.findViewById(R.id.tv_loading_text);
-        mAnim = AnimUtil.rotation(mIvLoading);
+        mAnim = AnimUtils.rotation(mIvLoading);
     }
 
     public void setTvLoadingText(String text) {

@@ -8,7 +8,7 @@ import android.view.animation.LinearInterpolator;
 /**
  * 动画工具类
  */
-public class AnimUtil {
+public class AnimUtils {
 
     /**
      * 旋转动画
