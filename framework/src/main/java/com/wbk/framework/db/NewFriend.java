@@ -13,7 +13,7 @@ public class NewFriend extends LitePalSupport {
     private long saveTime;
 
     // 状态 -1：待确认 0：同意 1：拒绝
-    private int response = -1;
+    private int response = 1;
 
     public String getMsg() {
         return msg;

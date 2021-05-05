@@ -7,21 +7,39 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
+import com.wbk.framework.bmob.BmobManager;
 import com.wbk.framework.cloud.CloudManager;
 import com.wbk.framework.db.LitePalHelper;
+import com.wbk.framework.db.NewFriend;
 import com.wbk.framework.entity.Constants;
 import com.wbk.framework.gson.TextBean;
+import com.wbk.framework.utils.CommonUtils;
 import com.wbk.framework.utils.LogUtils;
 import com.wbk.framework.utils.SpUtils;
 
 import org.litepal.LitePal;
 
+import java.util.List;
+
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.message.TextMessage;
 
 public class CloudService extends Service {
+
+    private Disposable mDisposable;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -71,10 +89,35 @@ public class CloudService extends Service {
 
                     } else if (textBean.getType().equals(CloudManager.TYPE_ADD_FRIEND)) {
                         // 存入本地数据库
-                        LogUtils.i("添加好友消息...");
-                        LitePalHelper.getInstance().saveNewFriend(textBean.getMsg(), message.getSenderUserId());
+                        // 过滤重复数据
+                        mDisposable = Observable.create((ObservableOnSubscribe<List<NewFriend>>) emitter -> {
+                            emitter.onNext(LitePalHelper.getInstance().queryNewFriend());
+                            emitter.onComplete();
+                        }).subscribeOn(Schedulers.newThread())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(newFriends -> {
+                                    boolean repeat = false;
+                                    if (CommonUtils.isNotEmpty(newFriends)) {
+                                        for (NewFriend newFriend : newFriends) {
+                                            if (message.getSenderUserId().equals(newFriend.getUserId())) {
+                                                repeat = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if (!repeat) {
+                                        LitePalHelper.getInstance().saveNewFriend(textBean.getMsg(), message.getSenderUserId());
+                                    }
+                                });
                     } else if (textBean.getType().equals(CloudManager.TYPE_AGREE_FRIEND)) {
-
+                        BmobManager.getInstance().addFriend(message.getSenderUserId(), new SaveListener<String>() {
+                            @Override
+                            public void done(String s, BmobException e) {
+                                if (e == null) {
+                                    // TODO 刷新好友列表
+                                }
+                            }
+                        });
                     }
                 }
                 return false;
@@ -82,4 +125,11 @@ public class CloudService extends Service {
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (!mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
+    }
 }

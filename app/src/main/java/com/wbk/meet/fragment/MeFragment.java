@@ -1,5 +1,6 @@
 package com.wbk.meet.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.wbk.framework.bmob.BmobManager;
 import com.wbk.framework.bmob.IMUser;
 import com.wbk.framework.helper.GlideHelper;
 import com.wbk.meet.R;
+import com.wbk.meet.ui.NewFriendActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -62,6 +64,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ll_new_friend:
+                startActivity(new Intent(getActivity(), NewFriendActivity.class));
+                break;
             default:
                 break;
         }

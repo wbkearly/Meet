@@ -163,4 +163,6 @@ public class SHA1 {
 
 * 集成LitePal.
 
+* 完成添加好友功能.
+
 
